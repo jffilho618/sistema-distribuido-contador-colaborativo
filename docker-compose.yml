@@ -1,0 +1,104 @@
+version: "3.8"
+
+services:
+  # Escravo de Letras (Container 1)
+  slave-letters:
+    build:
+      context: ./slave_letters
+      dockerfile: Dockerfile
+    container_name: slave-letters
+    ports:
+      - "8081:8081"
+    networks:
+      - distributed-system
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    environment:
+      - SERVICE_NAME=slave-letters
+      - SERVICE_PORT=8081
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Escravo de Números (Container 2)
+  slave-numbers:
+    build:
+      context: ./slave_numbers
+      dockerfile: Dockerfile
+    container_name: slave-numbers
+    ports:
+      - "8082:8082"
+    networks:
+      - distributed-system
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    environment:
+      - SERVICE_NAME=slave-numbers
+      - SERVICE_PORT=8082
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Servidor Mestre (Container 3)
+  master:
+    build:
+      context: ./master
+      dockerfile: Dockerfile
+    container_name: master
+    ports:
+      - "8080:8080"
+    networks:
+      - distributed-system
+    depends_on:
+      slave-letters:
+        condition: service_healthy
+      slave-numbers:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    environment:
+      - SERVICE_NAME=master
+      - SERVICE_PORT=8080
+      - SLAVE_LETTERS_URL=http://slave-letters:8081
+      - SLAVE_NUMBERS_URL=http://slave-numbers:8082
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+
+networks:
+  distributed-system:
+    driver: bridge
+    name: distributed-system-network
+
+# Volumes para persistência (se necessário no futuro)
+volumes:
+  logs:
+    driver: local
+
+# Configurações extras
+x-common-variables: &common-variables
+  TZ: America/Sao_Paulo
+  LANG: C.UTF-8
+  LC_ALL: C.UTF-8
