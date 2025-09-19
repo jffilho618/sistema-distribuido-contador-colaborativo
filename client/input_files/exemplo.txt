@@ -1,0 +1,34 @@
+Sistema Distribuído em C++ - Teste de Funcionalidade
+
+Este arquivo contém uma mistura de letras e números para testar o sistema distribuído.
+
+Dados de exemplo:
+- CPF: 123.456.789-00
+- Telefone: (11) 99999-8888
+- CEP: 01234-567
+- Idade: 25 anos
+- Salário: R$ 5.500,00
+
+Texto descritivo:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+
+Sequências mistas:
+abc123def456ghi789
+XYZ987PQR654MNO321
+test2024version1.5.3
+
+Caracteres especiais e pontuação:
+!@#$%^&*()_+-={}[]|\:";'<>?,./
+
+Números diversos:
+Pi = 3.14159265359
+E = 2.71828182846
+Ano = 2024
+Versão = 1.0
+
+Fim do arquivo de teste.
+Total esperado aproximado:
+- Letras: ~180-200
+- Números: ~40-60
