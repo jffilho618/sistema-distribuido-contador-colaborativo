@@ -421,10 +421,4 @@ mestre-escravo-sistemas-distribuidos/
 └── README.md
 ```
 
-## 📄 Licença
 
-Este projeto está licenciado sob a **MIT License**.
-
----
-
-**Desenvolvido com ❤️ para sistemas distribuídos modernos**
