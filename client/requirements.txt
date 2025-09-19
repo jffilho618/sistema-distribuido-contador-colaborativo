@@ -1,0 +1,13 @@
+# Dependências do Cliente PyQt5 - Sistema Distribuído
+# Contador de Letras/Números
+
+# Interface gráfica
+PyQt5>=5.15.0
+
+# Requisições HTTP
+requests>=2.25.0
+
+# Utilitários de sistema (já incluídos no Python 3.7+)
+# pathlib - manipulação de caminhos
+# json - processamento JSON
+# typing - type hints
